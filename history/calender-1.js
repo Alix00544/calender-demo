@@ -1,7 +1,3 @@
-/**
- * 兼容：
- * classList  IE 10+
- */
 var data = {
     "2019-08-09": {
         "morningHour": "08",
@@ -100,14 +96,8 @@ function addEvent() {
         eleLis[i].addEventListener('click', function (e) {
             var ele = document.getElementById("calender").getElementsByClassName("event-day selected");
             for (var i = 0; i < ele.length; i++) {
-                var classname = ele[i].className;
-                if(ele[i].classList){
-                    ele[i].classList.remove("selected");
-                }else{
-                    var classArr = classname.split(" ");
-                    classArr.splice(classArr.indexOf("selected"),1);
-                    ele[i].className = classArr.join(" ");
-                }
+                var className = ele[i].className;
+                ele[i].className = className.split(" selected")[0];
             }
             this.className += " selected";
             updateInfoBody.call(this);
@@ -247,11 +237,12 @@ function setSelect() {
             afterHourEnd: addPreZero(afterHourEnd.value),
             afterMinuteEnd: addPreZero(afterMinuteEnd.value)
         }
+        // createCalender(new Date(getCurrentShowDate()));
         updateWorkDayInfo();
         console.log(data);
     });
     btnSaveTime.addEventListener('click', function (e) {
-        //:TODO
+        // :TODO
         console.log(getCurrentSelectDate());
     });
 }
@@ -273,7 +264,6 @@ function updateWorkDayInfo() {
     for (var i = 0; i < eleLis.length; i++) {
         str = eleLis[i].firstChild.className;
         day = eleLis[i].firstChild.innerText;
-        
         if (str.indexOf("prev-month") != -1) {
             formatDate = getFormatDate(new Date(prevMonth.setDate(day)));
         } else if (str.indexOf("next-month") != -1) {
@@ -287,24 +277,16 @@ function updateWorkDayInfo() {
             var after = "下午：" + data[formatDate].afterHour + ":" + data[formatDate].afterMinute + "至" +
                 data[formatDate].afterHourEnd + ":" + data[formatDate].afterMinuteEnd;
             var tempnode =eleLis[i].firstChild;
-            var tempText = tempnode.innerText;
-            console.log(tempnode);
+
             if(eleLis[i].className.indexOf("holiday") == -1){
                 eleLis[i].className +=' holiday';
             }
 
-
-            // 设置为空后，chrome没有问题，IE中tempnode的innerHtml值为空；
             eleLis[i].innerHTML ="";
-            // console.log("updateWorkDayInfo:"+eleLis[i].innerHTML);
-            tempnode.innerText = tempText;
             eleLis[i].appendChild(tempnode);
-            console.log(tempnode);
-            // console.log("updateWorkDayInfo:"+eleLis[i].innerHTML);
             eleLis[i].innerHTML += "<div class='event-box'><p class='event-item'>" +morn+
                 "</p><p class='event-item'>" + after+
                 "</p></div>";
-            // console.log("updateWorkDayInfo:"+eleLis[i].innerHTML);
         }
     }
 }
