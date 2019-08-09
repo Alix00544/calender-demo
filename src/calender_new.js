@@ -2,16 +2,16 @@
 // var calenderJSON = require('./calendar.json');
 
 // 初始化，获得当前日期日历
-(function (date) {
+(function () {
     var cln = new Calender();
-    showCalender(date,cln);
+    showCalender(cln);
     addEventForHeader();
     setSelect();
-}(new Date()))
+}())
 
 
-function showCalender(date) {
-    createCalender(date);
+function showCalender(cln) {
+    createCalender(cln);
     addEvent();
 }
 
@@ -39,6 +39,7 @@ function Calender() {
             afterMinuteEnd: document.getElementById('afterMinuteEnd')
         }
     }
+    console.log(this.DOM);
 }
 
 // 创建新的日历界面
