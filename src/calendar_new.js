@@ -67,7 +67,7 @@ function Calender() {
     }
 }
 
-// 创建新的日历界面  已修改1.0
+// 创建新的日历界面
 function createCalender(cln) {
     var dateInfo = getDateInfo(new Date(cln.currentShowDate)),
         today = cln.today,
@@ -138,12 +138,12 @@ function updateInfoBody(cln) {
     var year = cln.currentShowDate.getFullYear(),
         month = cln.currentShowDate.getMonth(),
         showDate;
-    if (this.firstChild.className.indexOf('prev-month') != -1) {
-        showDate = new Date(year, month - 1, this.firstChild.innerText);
-    } else if (this.firstChild.className.indexOf('next-month') != -1) {
-        showDate = new Date(year, month + 1, this.firstChild.innerText);
+    if (this.firstElementChild.className.indexOf('prev-month') != -1) {
+        showDate = new Date(year, month - 1, this.firstElementChild.innerText);
+    } else if (this.firstElementChild.className.indexOf('next-month') != -1) {
+        showDate = new Date(year, month + 1, this.firstElementChild.innerText);
     } else {
-        showDate = new Date(year, month, this.firstChild.innerText);
+        showDate = new Date(year, month, this.firstElementChild.innerText);
     }
     cln.selectedDay = showDate;
     var date = getDateInfo(showDate);
@@ -252,8 +252,8 @@ function updateWorkDayInfo(cln) {
         str = "",
         formatDate;
     for (var i = 0; i < eleLis.length; i++) {
-        str = eleLis[i].firstChild.className;
-        day = eleLis[i].firstChild.innerText;
+        str = eleLis[i].firstElementChild.className;
+        day = eleLis[i].firstElementChild.innerText;
 
         if (str.indexOf("prev-month") != -1) {
             formatDate = getFormatDate(new Date(prevMonth.setDate(day)));
@@ -263,7 +263,7 @@ function updateWorkDayInfo(cln) {
             formatDate = getFormatDate(new Date(currentDate.setDate(day)));
         }
         if (data[formatDate]) {
-            var tempnode = eleLis[i].firstChild,
+            var tempnode = eleLis[i].firstElementChild,
                 tempText = tempnode.innerText;
 
             if (!data[formatDate]["holiday"]) {

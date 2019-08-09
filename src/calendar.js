@@ -127,12 +127,12 @@ function updateInfoBody() {
         year = currentDate.getFullYear(),
         month = currentDate.getMonth(),
         showDate;
-    if (this.firstChild.className.indexOf('prev-month') != -1) {
-        showDate = new Date(year, month - 1, this.firstChild.innerText);
-    } else if (this.firstChild.className.indexOf('next-month') != -1) {
-        showDate = new Date(year, month + 1, this.firstChild.innerText);
+    if (this.firstElementChild.className.indexOf('prev-month') != -1) {
+        showDate = new Date(year, month - 1, this.firstElementChild.innerText);
+    } else if (this.firstElementChild.className.indexOf('next-month') != -1) {
+        showDate = new Date(year, month + 1, this.firstElementChild.innerText);
     } else {
-        showDate = new Date(year, month, this.firstChild.innerText);
+        showDate = new Date(year, month, this.firstElementChild.innerText);
     }
     var date = getDateInfo(showDate);
     infoTittle.innerText = "" + date.year + "年" + date.strMonth + "月" + date.strDay + "日 " + date.strWeek;
@@ -290,8 +290,8 @@ function updateWorkDayInfo() {
         str = "",
         formatDate;
     for (var i = 0; i < eleLis.length; i++) {
-        str = eleLis[i].firstChild.className;
-        day = eleLis[i].firstChild.innerText;
+        str = eleLis[i].firstElementChild.className;
+        day = eleLis[i].firstElementChild.innerText;
 
         if (str.indexOf("prev-month") != -1) {
             formatDate = getFormatDate(new Date(prevMonth.setDate(day)));
@@ -306,7 +306,7 @@ function updateWorkDayInfo() {
                     data[formatDate].morningHourEnd + ":" + data[formatDate].morningMinuteEnd;
                 var after = "下午：" + data[formatDate].afterHour + ":" + data[formatDate].afterMinute + "至" +
                     data[formatDate].afterHourEnd + ":" + data[formatDate].afterMinuteEnd;
-                var tempnode = eleLis[i].firstChild;
+                var tempnode = eleLis[i].firstElementChild;
                 var tempText = tempnode.innerText;
 
                 if(eleLis[i].className.indexOf("holiday") != -1){
@@ -328,7 +328,7 @@ function updateWorkDayInfo() {
                 if (eleLis[i].className.indexOf("holiday") == -1) {
                     eleLis[i].className += ' holiday';
                 }
-                var tempnode = eleLis[i].firstChild;
+                var tempnode = eleLis[i].firstElementChild;
                 var tempText = tempnode.innerText;
                 eleLis[i].innerHTML = "";
                 tempnode.innerText = tempText;
