@@ -1,0 +1,274 @@
+body {
+    /* margin: 0px; */
+    padding: 8px;
+    background-color: #eaedf1;
+}
+
+.cld-wrapper {
+    position: relative;
+    margin: 0;
+    background-color: #fff;
+    min-width: 985px;
+}
+.cld-wrapper::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.cld-left {
+    width: 75%;
+    float: left;
+    min-width: 700px;
+}
+
+.cld-right {
+    width: 25%;
+    float: right;
+}
+
+.full-calender {
+    padding: 20px;
+    background: #fff;
+
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+.calender-header {
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.calender-header .calender-header-title {
+    margin: 0 10px;
+}
+
+.calender-body {
+    margin-top: 20px;
+}
+
+/* IE9 不支持flex布局,放弃使用flex*/
+/* 兼容IE9 */
+
+ul {
+    /* border: 1px solid #e0e0e0; */
+    border-top: 0px;
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    font-size: 0px;
+}
+
+.li-week {
+    font-weight: bold;
+    padding: 5px 0;
+    font-size: 12px;
+    width: 14.1%;
+    border-top: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    display: inline-block;
+    margin: 0 auto;
+    color: #19be6b;
+    text-align: center;
+}
+.left-border{
+    border-left: 1px solid #e0e0e0;
+}
+.bottom-border{
+    border-bottom: 1px solid #e0e0e0;
+}
+
+li.holiday {
+    color: #ed3f14;
+}
+
+.event-day {
+    cursor: pointer;
+    /* flex: 1; */
+    min-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 14.1%;
+    font-size: 16px;
+    display: inline-block;
+    border-right: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+}
+
+p {
+    margin: 0;
+}
+
+.event-day .day-number {
+    font-size: 20px;
+    text-align: right;
+    padding: 4px 5px 4px 4px;
+}
+
+.event-week .prev-month,
+.event-week .next-month {
+   opacity: 0.24;
+}
+
+.event-day .event-box .event-item {
+    cursor: pointer;
+    font-size: 12px;
+    background-color: #C7E6FD;
+    margin-bottom: 2px;
+    color: rgba(0, 0, 0, 0.87);
+    padding: 0 0 0 4px;
+    height: 18px;
+    line-height: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+.event-day .event-box{
+    margin-top: 10px;
+}
+
+/* .event-day .event-box .event-item.is-end {
+    margin-right: 4px;
+}
+
+.event-day .event-box .event-item.is-start {
+    margin-left: 4px;
+} */
+
+.event-week .event-day.today{
+    background-color: #fcf8e3 !important;
+}
+
+.event-week .event-day.selected{
+    background-color: #ddefbf;
+}
+
+/* 日历右边栏 */
+button {
+    outline: none;
+    border: 0;
+}
+
+h3,
+h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.prev-month,
+.next-month {
+    cursor: pointer;
+}
+
+.btn-back-today {
+    float: right;
+    cursor: pointer;
+    text-align: right;
+    margin: 14px 20px;
+    padding: 6px 15px;
+    color: #fff;
+    border: 1;
+    background-color: #ff9900;
+    border-color: #ff9900;
+    border-radius: 4px;
+}
+
+.btn-back-today span {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.btn-back-today:hover {
+    background-color: #ffad33;
+    border-color: #ffad33;
+}
+
+.btn-back-today:focus {
+    box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+}
+
+.calender-info {
+    clear: both;
+    text-align: center;
+    border: 1px solid #e9eaec;
+    padding: 16px;
+    margin-right: 20px;
+    border-radius: 4px;
+    line-height: 1.5;
+    font-size: 14px;
+    color: #495060;
+}
+
+.info-date-tittle {
+    display: block;
+    font-size: 1.17em;
+}
+
+.info-date {
+    color: #19be6b;
+    font-size: 60px;
+}
+
+.info-form {
+    margin-top: 4px;
+}
+
+.info-form label {
+    text-align: left;
+    display: block;
+    margin: 5px 0;
+}
+
+.info-form select {
+    outline: none;
+    min-width: 40px;
+    width: 20%;
+    height: 24px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.info-form select:focus {
+    border-color: #ffb554;
+}
+
+.info-submit {
+    margin: 20px 0;
+    text-align: right;
+    line-height: 1.5;
+    font-size: 12px;
+}
+
+.table {
+    margin: 30px 0;
+}
+
+.table p {
+    margin: 3px 0;
+}
+
+.info-submit button{
+    color: #fff;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.info-submit .btn-active {
+    background-color: #ffa329;
+    border-color: #ffa329;
+    border: 1;
+}
+
+.btn-active:hover {
+    background-color: #f29b27;
+    border-color: #f29b27;
+    border: 1;
+}

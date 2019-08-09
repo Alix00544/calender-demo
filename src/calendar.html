@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>日历</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="calender" class="cld-wrapper">
+        <div class="cld-left">
+            <div class="full-calender">
+                <div class="calender-header">
+                    <span class="prev-month">&lt;</span>
+                    <span class="calender-header-title"></span>
+                    <span class="next-month">&gt;</span>
+                </div>
+                <div class="calender-body">
+                    <ul class="weekdays">
+                        <li class="li-week left-border">周一</li>
+                        <li class="li-week">周二</li>
+                        <li class="li-week">周三</li>
+                        <li class="li-week">周四</li>
+                        <li class="li-week">周五</li>
+                        <li class="li-week weekends">周六</li>
+                        <li class="li-week weekends">周日</li>
+                    </ul>
+                    <div class="dates"></div>
+                </div>
+            </div>
+        </div>
+        <div class="cld-right">
+            <button class="btn-back-today"><span>返回今天</span></button>
+            <div class="calender-info">
+                <h3 class="info-date-tittle"></h3>
+                <div class="info-date"></div>
+                <p>设置工作时间</p>
+                <div  class="info-form">
+                    <div>
+                        <label>上午</label>
+                        <select name="morningHour" id="morningHour">
+                            <option selected value="-">-</option>
+                        </select>
+                        <select name="morningMinute" id="morningMinute">
+                            <option value="-">-</option>
+                        </select>
+                        <span>至</span>
+                        <select name="morningHourEnd" id="morningHourEnd">
+                            <option value="-">-</option>
+                        </select>
+                        <select name="morningMinuteEnd" id="morningMinuteEnd">
+                            <option value="-">-</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>下午</label>
+                        <select name="afterHour" id="afterHour">
+                            <option value="-">-</option>
+                        </select>
+                        <select name="afterMinute" id="afterMinute">
+                            <option value="-">-</option>
+                        </select>
+                        <span>至</span>
+                        <select name="afterHourEnd" id="afterHourEnd">
+                            <option value="-">-</option>
+                        </select>
+                        <select name="afterMinuteEnd" id="afterMinuteEnd">
+                            <option value="-">-</option>
+                        </select>
+                    </div>
+                    <div class="info-submit">
+                        <button class="btn-active" id='btnSetWorkDay'>设置为非工作日</button>
+                        <button id="btnSaveTime">保存时间</button>
+                    </div>
+                </div>
+                <div class="table">
+                    <h4>系统默认工作时间</h4>
+                    <p>上午：08:30至12:00</p>
+                    <p>下午：13:00至17:30</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="calendar.js"></script>
+    <!-- <script src="calender_new.js"></script> -->
+</body>
+
+</html>
