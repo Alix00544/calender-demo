@@ -4,6 +4,7 @@
  */
 var data = {
     "2019-08-09": {
+        "holiday": false,
         "morningHour": "08",
         "morningMinute": "30",
         "morningHourEnd": "12",
@@ -14,6 +15,7 @@ var data = {
         "afterMinuteEnd": "30"
     },
     "2019-08-11": {
+        "holiday": false,
         "morningHour": "08",
         "morningMinute": "30",
         "morningHourEnd": "12",
@@ -101,11 +103,11 @@ function addEvent() {
             var ele = document.getElementById("calender").getElementsByClassName("event-day selected");
             for (var i = 0; i < ele.length; i++) {
                 var classname = ele[i].className;
-                if(ele[i].classList){
+                if (ele[i].classList) {
                     ele[i].classList.remove("selected");
-                }else{
+                } else {
                     var classArr = classname.split(" ");
-                    classArr.splice(classArr.indexOf("selected"),1);
+                    classArr.splice(classArr.indexOf("selected"), 1);
                     ele[i].className = classArr.join(" ");
                 }
             }
@@ -120,13 +122,14 @@ function addEvent() {
 // 切换右方日期展示界面
 function updateInfoBody() {
     var infoTittle = document.getElementById("calender").getElementsByClassName("info-date-tittle")[0];
+    var btnSetWorkDay = document.getElementById("btnSetWorkDay");
     var currentDate = getCurrentShowDate(),
         year = currentDate.getFullYear(),
         month = currentDate.getMonth(),
         showDate;
-    if (this.firstChild.className.indexOf('prev-month')!=-1) {
+    if (this.firstChild.className.indexOf('prev-month') != -1) {
         showDate = new Date(year, month - 1, this.firstChild.innerText);
-    } else if (this.firstChild.className.indexOf('next-month')!=-1) {
+    } else if (this.firstChild.className.indexOf('next-month') != -1) {
         showDate = new Date(year, month + 1, this.firstChild.innerText);
     } else {
         showDate = new Date(year, month, this.firstChild.innerText);
@@ -134,6 +137,11 @@ function updateInfoBody() {
     var date = getDateInfo(showDate);
     infoTittle.innerText = "" + date.year + "年" + date.strMonth + "月" + date.strDay + "日 " + date.strWeek;
     calender.getElementsByClassName('info-date')[0].innerText = date.strDay;
+    if (this.className.indexOf("holiday") == -1) {
+        btnSetWorkDay.innerText = "设置为非工作日";
+    } else {
+        btnSetWorkDay.innerText = "设置为工作日";
+    }
 }
 
 // 为日历标题添加月份切换事件
@@ -226,6 +234,7 @@ function setSelect() {
         afterMinuteEnd.add(new Option(numstr, i), null);
     }
 
+    // 设置 select 默认值
     morningHour.value = 8;
     morningMinute.value = 0;
     morningHourEnd.value = 12;
@@ -236,19 +245,28 @@ function setSelect() {
     afterMinuteEnd.value = 30;
 
     btnSetWorkDay.addEventListener('click', function (e) {
-        console.log(getCurrentSelectDate());
-        data[getCurrentSelectDate()] = {
-            morningHour: addPreZero(morningHour.value),
-            morningMinute: addPreZero(morningMinute.value),
-            morningHourEnd: addPreZero(morningHourEnd.value),
-            morningMinuteEnd: addPreZero(morningMinuteEnd.value),
-            afterHour: addPreZero(afterHour.value),
-            afterMinute: addPreZero(afterMinute.value),
-            afterHourEnd: addPreZero(afterHourEnd.value),
-            afterMinuteEnd: addPreZero(afterMinuteEnd.value)
+        // console.log(getCurrentSelectDate());
+        if (this.innerText == "设置为工作日") {
+            data[getCurrentSelectDate()] = {
+                holiday: false,
+                morningHour: addPreZero(morningHour.value),
+                morningMinute: addPreZero(morningMinute.value),
+                morningHourEnd: addPreZero(morningHourEnd.value),
+                morningMinuteEnd: addPreZero(morningMinuteEnd.value),
+                afterHour: addPreZero(afterHour.value),
+                afterMinute: addPreZero(afterMinute.value),
+                afterHourEnd: addPreZero(afterHourEnd.value),
+                afterMinuteEnd: addPreZero(afterMinuteEnd.value)
+            }
+            this.innerText="设置为非工作日";
+        } else {
+            data[getCurrentSelectDate()] = {
+                holiday: true
+            }
+            this.innerText="设置为工作日";
         }
         updateWorkDayInfo();
-        console.log(data);
+        // console.log(data);
     });
     btnSaveTime.addEventListener('click', function (e) {
         //:TODO
@@ -257,8 +275,8 @@ function setSelect() {
 }
 
 // 返回两位字符串 8 => '08'
-function addPreZero(num){
-    return num <10? '0'+num:num;
+function addPreZero(num) {
+    return num < 10 ? '0' + num : num;
 }
 
 function updateWorkDayInfo() {
@@ -267,13 +285,14 @@ function updateWorkDayInfo() {
         nextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
     var calender = document.getElementById("calender"),
         ul = calender.getElementsByClassName("event-week")[0],
+        btnSetWorkDay = document.getElementById("btnSetWorkDay"),
         eleLis = ul.getElementsByTagName('li'),
         str = "",
         formatDate;
     for (var i = 0; i < eleLis.length; i++) {
         str = eleLis[i].firstChild.className;
         day = eleLis[i].firstChild.innerText;
-        
+
         if (str.indexOf("prev-month") != -1) {
             formatDate = getFormatDate(new Date(prevMonth.setDate(day)));
         } else if (str.indexOf("next-month") != -1) {
@@ -282,29 +301,40 @@ function updateWorkDayInfo() {
             formatDate = getFormatDate(new Date(currentDate.setDate(day)));
         }
         if (data[formatDate]) {
-            var morn = "上午：" + data[formatDate].morningHour + ":" + data[formatDate].morningMinute + "至" +
-                data[formatDate].morningHourEnd + ":" + data[formatDate].morningMinuteEnd;
-            var after = "下午：" + data[formatDate].afterHour + ":" + data[formatDate].afterMinute + "至" +
-                data[formatDate].afterHourEnd + ":" + data[formatDate].afterMinuteEnd;
-            var tempnode =eleLis[i].firstChild;
-            var tempText = tempnode.innerText;
-            console.log(tempnode);
-            if(eleLis[i].className.indexOf("holiday") == -1){
-                eleLis[i].className +=' holiday';
+            if (!data[formatDate]["holiday"]) {
+                var morn = "上午：" + data[formatDate].morningHour + ":" + data[formatDate].morningMinute + "至" +
+                    data[formatDate].morningHourEnd + ":" + data[formatDate].morningMinuteEnd;
+                var after = "下午：" + data[formatDate].afterHour + ":" + data[formatDate].afterMinute + "至" +
+                    data[formatDate].afterHourEnd + ":" + data[formatDate].afterMinuteEnd;
+                var tempnode = eleLis[i].firstChild;
+                var tempText = tempnode.innerText;
+
+                if(eleLis[i].className.indexOf("holiday") != -1){
+                    var classname = eleLis[i].className;
+                    var classArr = classname.split(" ");
+                    classArr.splice(classArr.indexOf("holiday"), 1);
+                    eleLis[i].className = classArr.join(" ");
+                }
+
+                // 设置为空后，chrome没有问题，IE中tempnode的innerHtml值为空；
+                eleLis[i].innerHTML = "";
+                tempnode.innerText = tempText;
+                eleLis[i].appendChild(tempnode);
+                eleLis[i].innerHTML += "<div class='event-box'><p class='event-item'>" + morn +
+                    "</p><p class='event-item'>" + after +
+                    "</p></div>";
+                // btnSetWorkDay.innerText = "设置为工作日";
+            } else {
+                if (eleLis[i].className.indexOf("holiday") == -1) {
+                    eleLis[i].className += ' holiday';
+                }
+                var tempnode = eleLis[i].firstChild;
+                var tempText = tempnode.innerText;
+                eleLis[i].innerHTML = "";
+                tempnode.innerText = tempText;
+                eleLis[i].appendChild(tempnode);
+                // btnSetWorkDay.innerText = "设置为非工作日";
             }
-
-
-            // 设置为空后，chrome没有问题，IE中tempnode的innerHtml值为空；
-            eleLis[i].innerHTML ="";
-            // console.log("updateWorkDayInfo:"+eleLis[i].innerHTML);
-            tempnode.innerText = tempText;
-            eleLis[i].appendChild(tempnode);
-            console.log(tempnode);
-            // console.log("updateWorkDayInfo:"+eleLis[i].innerHTML);
-            eleLis[i].innerHTML += "<div class='event-box'><p class='event-item'>" +morn+
-                "</p><p class='event-item'>" + after+
-                "</p></div>";
-            // console.log("updateWorkDayInfo:"+eleLis[i].innerHTML);
         }
     }
 }
